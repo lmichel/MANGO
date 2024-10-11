@@ -1,0 +1,48 @@
+% Mireille intro to the model dictionnary
+%---------------------------------------
+
+\pagebreak
+
+\section{Model: mango in details} 
+  The purpose of MANGO, which stands for MO-del for AN-notating G-eneric O-objects, is to add an upper level of description to the tabular data of query responses. It allows metadata to be extended, complex quantities to be reconstructed from column values, and properties to be linked. It also allows to specify the origin af the data.
+Here is an overview of the data model organization. 
+
+  \subsection{Building blocks}
+ 
+ The main class MangoObject represents the astronomical source or detection.
+ It is connected to a set of Properties observed and served by the catalog . 
+ The properties  can be organized in various categories  as shown in Table \ref{tab:modelelement}.
+
+ \begin{table}[ht]
+  \begin{center}
+  \caption{Building blocks and class purpose in MANGO }
+  \label{tab:modelelement}
+    \begin{tabular}{p{0.38\textwidth}p{0.30\textwidth} p{0.35\textwidth}}
+    \sptablerule
+     \textbf{Type}  & \textbf{related classes}   &                     \\\sptablerule
+       Physical Properties         &         &                    \\
+      & Measure &time stamp, position, radial velocity        \\\sptablerule
+      Geometric properties          &  & \\
+            &Shape  &      \\
+          & & SpaceSys, ShapeSerialisation                          \\\sptablerule
+      Time dependant Properties    &    &                   \\
+        & Epoch Position     &                  \\
+       & & Error Position              \\
+       & &SpaceSys, TimeSys               \\\sptablerule
+     Photometric Properties   &  &   \\
+         &  PhotometricProperty   &      \\           
+       & & PhotCal reference         \\
+         & & PhotometryFilter  \\
+          & Color & \\   
+             &   & ColorDef (HardnessRatio)  \\\sptablerule
+       Interpretation information  &       &  \\
+         &Status \\
+           & &StatusValues \\
+           & &BitField \\  
+         & Label & \\
+         &  & enum labels \\\sptablerule
+         Linking Property 
+         &  DataLink &  \\\sptablerule-    \end{tabular}
+ \end{center}
+\end{table}
+

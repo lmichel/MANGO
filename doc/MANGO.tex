@@ -118,7 +118,7 @@ as well as for catalogs \citep{wd:catalog}.
 Other proposals, more model-agnostic, were focused on the data annotation in VOTables
 \citep{note:stcvot} \citep{note:seb}.
 In this case the goal was no longer to design a source model but to provide a complete description of
-individual quantities (positions, velocity, fluxes, magnitudes…).
+individual quantities (positions, velocity, fluxes, magnitudes).
 None of these proposals has come to completion due to the complexity of the task.
 
 The source DM issue resurfaced at the spring 2018 Interop in Victoria during an hands-on session
@@ -141,7 +141,7 @@ components from VO existing models embedded on demand in a container.
 
 MANGO is not designed to describe what a source is but to help clients to discover and to understand
 the features (i.e quantities) available for a particular source instance.
-VOTable data mapped on MANGO with MIVOT (2023ivoa.spec.0620M) annotations can be consumed on a feature basis 
+VOTable data mapped on MANGO with MIVOT \citep{2023ivoa.spec.0620M} annotations can be consumed on a feature basis 
 instead of column per column.
 The way complex quantities are built is described by MANGO but no longer by the client applications.
 
@@ -164,7 +164,7 @@ UCD, VOUnits and Vocabularies are also re-used.
 \subsection{Use Cases}
 
 The main purpose of MANGO is to add an upper description level to the tabular data of query responses.
-MANGO is not designed to replace the meta-data already present in query responses, but on the contrary, to provide a model_aware layer with structured classes to interpret them and exploit them in client applications. 
+MANGO is not designed to replace the meta-data already present in query responses, but on the contrary, to provide a model-aware layer with structured classes to interpret them and exploit them in client applications. 
 
 Uses-cases have been collected since 2019 from representatives of various astronomical 
 missions, archive designers and tools developers.
@@ -588,20 +588,20 @@ the model should provide added value: 1) nature of supported quantities 2) data 
      \label{overview}
 \end{figure}
 
-The root class of the model \texttt{MANGOObject} which has only
+The root class of the model is \texttt{MangoObject} : it has only
 one mandatory attribute, an \texttt{identifier}.
 Identifiers should be unique within a collection, e.g. a data table, although 
 this feature is not required by the model.
 
-In addition to its identifier, \texttt{MANGOObject} objects have 2 components:
+In addition to its identifier, \texttt{MANGOObject} instances have 2 components:
 
 \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
 
   \item \texttt{dataOrigin} (origin of the \texttt{MANGOObject}) : The structure of this class is based on
         the recommendations of the DCP interest group \footnote{https://ivoa.net/documents/DataOrigin/index.html}.
-  \item \texttt{popertyDock} (place holder for all the \texttt{MANGOObject} properties) :
+  \item \texttt{propertyDock} (place holder for all the \texttt{MANGOObject} properties) :
         This is an open-ended collection.
-        Mango properties inherit from the base class \texttt{Property},
+        MANGO properties inherit from the base class \texttt{Property},
         which contains everything necessary to identify both their nature and their role.
         Properties can be linked together to form compound parameters.
 \end{itemize}
@@ -625,22 +625,22 @@ for the client to understand the actual nature of each property:
     \item \textbf{Semantics}: the semantic tag specifies the exact role of the property by
           referring to a standard vocabulary. The semantic tag can relate to the property itself
           or to the set formed by the property and its associated properties.
-          For example, a signal amplitude associated with a time and position can be tagged
+          For example, a signal amplitude associated with a time and position coordinates can be tagged
           as a photon event.
     \item \textbf{Description}: free text description.
     \item \textbf{Literal attributes} : some property classes embed qualifiers telling 
-          how the quantity must be interpreted (e.g. colour vs hardness ratio)
+          how the quantity must be interpreted (e.g. colour vs hardness ratio) and labelled if plotted. 
 \end{itemize}
 
 
 \subsubsection{MANGO and MIVOT: Structuring Tabular Data}
 
 MANGO is primarily used to organise tabular data provided by TAP services \citep{2019ivoa.spec.0927D}.
-To achieve this, table rows must be linked to the model using MIVOT annotations.
+To achieve this, table rows must be linked to the model using MIVOT annotations \citep{2023ivoa.spec.0620M}.
 We propose two strategies for establishing this mapping:
 \begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
     \item Single Object per Row: Each table row is treated as a single object,
-          with its properties grouped within a container or dock.
+          with its properties grouped within a container or dock. 
     \item Scattered Independent Quantities: Each table row is considered as a collection of independent quantities.
 \end{itemize}
 
@@ -651,7 +651,7 @@ MIVOT annotations support both approaches:
           model's features. Properties can be interconnected, data rows can be identified
           and treated as individual entities (MANGO objects) that can be linked together to describe,
           for example, sources with their detections or orbiting systems.
-          This approach allows for serialisation formats like XML or JSON, which often require
+          This approach allows for serialization formats like XML or JSON, which often require
           a unique root.
           However, the annotation process might be slightly more complex due to additional class levels.
     \item MANGO as a Sparse Parameter View: In this simpler approach, the data mapping is a
@@ -689,7 +689,7 @@ The tabular structure of MANGO instances will be reflected in TAP services as th
         linking to the master sources table.
 \end{itemize}
 
-While the measure model is hierarchical, it can be flattened into a single table,
+While the Measure model is hierarchical, it can be flattened into a single table,
 considering that the model structure can be retrieved using TAP\_SCHEMA.
 This schema necessitates server-side exploration of all parameter tables
 to retrieve complete MANGO instances.
@@ -699,9 +699,8 @@ To speed-up this process, the \emph{MANGOCore} table can be utilised.
 
 The discovery of \emph{MANGO Catalogs} can be helped by a  \emph{MANGOCore} table located in the  \emph{schema} schema. As MANGO is not dedicated to any specific domain, we cannot define a set of core parameters, but parameters can be flagged as \emph{Core Parameter}.
 This selection is left at the discretion of the curator.
-The \emph{MANGOCore} table has set of columns per parameter class plus one for the catalog ID.
+The \emph{MANGOCore} table has one set of columns per Property class plus one column for the catalog ID.
 It has one row per stored catalog. Each parameter has at least 2 columns: one with the UCD and one with the \emph{Core} flag. TBC
-
 
 \appendix
 
